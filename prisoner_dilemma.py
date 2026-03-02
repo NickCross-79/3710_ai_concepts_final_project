@@ -4,10 +4,10 @@ from strats import decide_move
 # (playerA, playerB)
 
 PAYOFFS = {
-    (1, 1): (1, 1),  # CC
+    (1, 1): (3, 3),  # CC
     (1, 0): (0, 5),  # CD
     (0, 1): (5, 0),  # DC
-    (0, 0): (3, 3)   # DD
+    (0, 0): (1, 1)   # DD
 }
 
 
@@ -25,28 +25,25 @@ def play_match(strategy_a, strategy_b, rounds=200):
     score_a = 0
     score_b = 0
 
-    last_state_a = None
-    last_state_b = None
-
-    last_move_a = None
-    last_move_b = None
+    history_a = []  # my moves as A
+    history_b = []  # my moves as B
 
     for r in range(rounds):
 
-        move_a = decide_move(strategy_a, last_state_a, r)
-        move_b = decide_move(strategy_b, last_state_b, r)
+        # Pass full history so decide_move can look back 3 rounds
+        state_a = (history_a, history_b) if r > 0 else None
+        state_b = (history_b, history_a) if r > 0 else None
+
+        move_a = decide_move(strategy_a, state_a, r)
+        move_b = decide_move(strategy_b, state_b, r)
 
         payoff_a, payoff_b = play_round(move_a, move_b)
 
         score_a += payoff_a
         score_b += payoff_b
 
-        # Update states
-        last_state_a = (move_a, move_b)
-        last_state_b = (move_b, move_a)
-
-        last_move_a = move_a
-        last_move_b = move_b
+        history_a.append(move_a)
+        history_b.append(move_b)
 
     return score_a, score_b
 
