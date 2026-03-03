@@ -26,7 +26,6 @@ def random_search(opponents, matches=5000, rounds=200):
         if score > best_score:
             best_score = score
             best_strategy = strat
-    print(best_strategy)
     return best_strategy, best_score, history
 
 

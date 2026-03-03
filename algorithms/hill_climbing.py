@@ -29,6 +29,11 @@ def hill_climbing(opponents, matches=2000, rounds=200):
         current_score = round_robin_score(current, opponents, rounds)
         matches_used += 1
 
+        # Track this as best if it's better than anything seen so far
+        if current_score > best_ever_score:
+            best_ever_score = current_score
+            best_ever_strategy = current[:]
+
         while matches_used < matches:
 
             # Check all neighbors (5 neighbors for a 5-bit strategy)

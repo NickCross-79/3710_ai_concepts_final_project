@@ -8,7 +8,7 @@ import random
 # Plus 6 bits for the first 3 moves (before we have full history)
 # Total = 70 bits
 
-STRATEGY_LENGTH = 70  # 6 bits for opening moves + 64 bits for history lookup
+STRATEGY_LENGTH = 67  # 3 opening-move bits + 64 bits for history lookup
 
 
 def random_strategy():
@@ -82,8 +82,8 @@ def decide_move(strategy, last_state, round_number):
     bits = my_last3 + opp_last3
     index = int("".join(str(b) for b in bits), 2)
 
-    # Offset by 6 (skip the opening move bits)
-    return strategy[6 + index]
+    # Offset by 3 (skip the 3 opening move bits)
+    return strategy[3 + index]
 
 
 # -------------------------
@@ -109,7 +109,7 @@ def tit_for_tat():
     # Opponent's last move is the last bit of opp_last3
     for i in range(64):
         opp_last = i & 1  # last bit = opponent's most recent move
-        strategy[6 + i] = opp_last
+        strategy[3 + i] = opp_last
     return strategy
 
 
@@ -121,8 +121,26 @@ def suspicious_tit_for_tat():
 
 
 def strategy_to_string(strategy):
-    """Human readable summary."""
+    """Human readable decode of a 67-bit strategy."""
     opening = "".join("C" if b == 1 else "D" for b in strategy[:3])
-    coop_count = sum(strategy[6:])
+    coop_count = sum(strategy[3:])
     total = 64
-    return f"Opening: {opening} | Cooperates in {coop_count}/{total} history states"
+
+    lines = []
+    lines.append(f"Opening moves : {opening}")
+    lines.append(f"Cooperates in : {coop_count}/{total} history states")
+    lines.append("")
+    lines.append("History table (my last 3 | opp last 3 → move):")
+    lines.append(f"  {'My:-3 -2 -1':>14}  {'Opp:-3 -2 -1':>14}  {'Move':>4}")
+    lines.append("  " + "-" * 38)
+
+    for i in range(64):
+        bits = f"{i:06b}"
+        my3  = bits[:3]
+        opp3 = bits[3:]
+        my_str  = "  ".join("C" if b == "1" else "D" for b in my3)
+        opp_str = "  ".join("C" if b == "1" else "D" for b in opp3)
+        move = "C" if strategy[3 + i] == 1 else "D"
+        lines.append(f"  {my_str:>14}  {opp_str:>14}  {move:>4}")
+
+    return "\n".join(lines)
