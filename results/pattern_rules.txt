@@ -1,0 +1,12 @@
+Behavioural Pattern Rules
+==================================================
+
+Based on top-20% vs bottom-20% strategies by tournament score.
+
+• High-performing strategies have a lower overall cooperation rate (40.2% vs 52.4%) across all history states.
+• Opening cooperation: top strategies cooperate 27.6% of the time in early rounds vs 54.0% for bottom strategies.
+• After mutual cooperation, top strategies cooperate significantly lower (44.6% vs 52.3%), suggesting more punishing behaviour.
+• After opponent defection, top strategies cooperate 43.4% vs 52.6% — top performers tend to be more retaliatory.
+• After mutual defection, top strategies cooperate 45.1% vs 51.2% — suggesting top performers are more locked into defection cycles.
+• After the strategy itself defected, the cooperation rate is 37.3% (top) vs 51.8% (bottom), indicating sustained exploitation in top strategies.
+• Among the 20 most discriminating history-table bits, 1/20 favour more cooperation in top strategies — indicating nuanced state-specific decisions.

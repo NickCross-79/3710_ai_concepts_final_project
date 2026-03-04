@@ -1,0 +1,6 @@
+opponent,total_score,avg_per_round,coop_rate,opp_coop_rate
+Always Cooperate,5000,5.0,0.0,1.0
+Always Defect,600,0.6,0.4,0.0
+Tit-for-Tat,2664,2.664,0.662,0.664
+Tit-for-Two-Tats,2755,2.755,0.249,0.501
+Suspicious Tit-for-Tat,2660,2.66,0.662,0.663

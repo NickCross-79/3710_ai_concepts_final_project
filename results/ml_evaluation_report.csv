@@ -1,0 +1,7 @@
+model,type,accuracy,auc,r2,mae
+Gb Regressor,regression,—,—,0.7646,217.92
+Gradient Boosting,classification,0.8643,0.9457,—,—
+Logistic Regression,classification,0.8429,0.9271,—,—
+Mlp,classification,0.8286,0.902,—,—
+Random Forest,classification,0.8643,0.9344,—,—
+Rf Regressor,regression,—,—,0.718,232.12
